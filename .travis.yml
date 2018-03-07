@@ -1,5 +1,7 @@
-language: java
+os: linux
 dist: trusty
+sudo: required
+language: java
 jdk:
 - oraclejdk8
 - oraclejdk9
@@ -23,6 +25,7 @@ script:
 - "/bin/cp -f -r ./.mvn/ci/.scalaide $HOME/.scalaide"
 - "/bin/cp -f ./.mvn/ci/settings.xml $HOME/.m2/settings.xml"
 - "/bin/cp -f ./.mvn/ci/toolchains-travis.xml $HOME/.m2/toolchains.xml"
+- "./.mvn/ci/llvm-travis.sh || exit 1"
 - "./.mvn/verify.sh || exit 1"
 - "./.mvn/release-bintray.sh || exit 1"
 - "./demo/.mvn/verify.sh || exit 1"

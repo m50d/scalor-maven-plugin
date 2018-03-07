@@ -16,6 +16,7 @@ import java.nio.charset.Charset
 
 import scala.language.implicitConversions
 import java.util.regex.Matcher
+import java.nio.charset.StandardCharsets
 
 /**
  * Operations against base folder.
@@ -154,6 +155,58 @@ object Folder {
     }
   }
 
+  def fileHasMatch(
+    path :          String,
+    includeOption : Option[ Matcher ], excludeOption : Option[ Matcher ]
+  ) : Boolean = {
+    val hasInclude = includeOption.map( _.reset( path ).matches ).getOrElse( true )
+    val hasExclude = excludeOption.map( _.reset( path ).matches ).getOrElse( false )
+    hasInclude && !hasExclude
+  }
+
+  def fileHasMatch(
+    file :          File,
+    includeOption : Option[ Matcher ], excludeOption : Option[ Matcher ]
+  ) : Boolean = {
+    fileHasMatch( file.getCanonicalPath, includeOption, excludeOption )
+  }
+
+  def fileCollectByRegex(
+    root :          File,
+    includeOption : Option[ Matcher ], excludeOption : Option[ Matcher ],
+    fileList : ArrayList[ File ]
+  ) : Unit = {
+    val list = root.listFiles
+    var index = 0
+    var limit = list.length
+    while ( index < limit ) {
+      val file = list( index ); index += 1
+      if ( file.isFile && fileHasMatch( file, includeOption, excludeOption ) ) {
+        fileList.add( file )
+      } else if ( file.isDirectory ) {
+        fileCollectByRegex( file, includeOption, excludeOption, fileList )
+      }
+    }
+  }
+
+  def fileListByRegex(
+    rootList :      Array[ File ],
+    includeOption : Option[ String ], excludeOption : Option[ String ]
+  ) : Array[ File ] = {
+    val matcherInclude = includeOption.map( _.r.pattern.matcher( "" ) )
+    val matcherExclude = excludeOption.map( _.r.pattern.matcher( "" ) )
+    val fileList = new ArrayList[ File ]( 256 )
+    var index = 0
+    var limit = rootList.length
+    while ( index < limit ) {
+      val root = rootList( index ); index += 1
+      if ( root.isDirectory ) {
+        fileCollectByRegex( root, matcherInclude, matcherExclude, fileList )
+      }
+    }
+    fileList.toArray( Array[ File ]() )
+  }
+
   //  def findJarByResource( loader : ClassLoader, resource : String ) : Array[ File ] = {
   //    val iter = loader.getResources( resource )
   //    val list = new HashSet[ File ]( 16 )
@@ -214,11 +267,6 @@ object Folder {
     Files.walk( sourceFolder ).forEach( consumer )
   }
 
-  /**
-   * Descriptor: file and its version.
-   */
-  case class FileItem( file : File, version : String )
-
   def findFileByName( classpath : Array[ File ], regex : String ) : Either[ String, File ] = {
     classpath.collect {
       case file if file.getName.matches( regex ) => file
@@ -226,18 +274,6 @@ object Folder {
       case head :: Nil  => Right( head )
       case head :: tail => Left( s"Duplicate file: ${regex}" )
       case Nil          => Left( s"File not present: ${regex}" )
-    }
-  }
-
-  /**
-   * Locate file and extract its version by regex.
-   */
-  def resolveJar( classPath : Array[ File ], regex : String ) : Either[ String, FileItem ] = {
-    for {
-      file <- findFileByName( classPath, regex ).right
-      version <- extractVersion( file, regex ).right
-    } yield {
-      FileItem( file, version )
     }
   }
 
@@ -270,7 +306,7 @@ object Folder {
    */
   def persistString(
     file : File, text : String,
-    charset : Charset = Charset.forName( "UTF-8" )
+    charset : Charset = StandardCharsets.UTF_8
   ) = {
     Files.write( file.toPath, text.getBytes( charset ) )
   }

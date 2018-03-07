@@ -105,6 +105,12 @@
                             <artifactId>supersafe_${version.scala.release}</artifactId>
                             <version>${version.supersafe}</version>
                         </dependency>
+                        <!-- Verify special artifact id pattern. -->
+                        <dependency>
+                            <groupId>org.spire-math</groupId>
+                            <artifactId>kind-projector_${version.scala.epoch}</artifactId>
+                            <version>0.9.6</version>
+                        </dependency>
                     </definePluginList>
 
                 </configuration>
