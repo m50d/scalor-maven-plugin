@@ -268,60 +268,6 @@
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>3.7.0</version>
 				</plugin>
-				<plugin>
-					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>3.0.0</version>
-					<configuration>
-						<quiet>true</quiet>
-						<show>protected</show>
-						<linksource>true</linksource>
-						<windowtitle>scalor-maven-plugin-0-SNAPSHOT / ${projectTimeISO}</windowtitle>
-						<doctitle>scalor-maven-plugin-0-SNAPSHOT / ${projectTimeISO}</doctitle>
-						<header>&lt;a
-							href="https://github.com/random-maven/scalor-maven-plugin"
-							target="_blank"&gt;scalor-maven-plugin&lt;/a&gt;&lt;br&gt;0-SNAPSHOT
-							/ ${projectTimeISO}</header>
-						<footer>&lt;a
-							href="https://github.com/random-maven/scalor-maven-plugin"
-							target="_blank"&gt;scalor-maven-plugin&lt;/a&gt;&lt;br&gt;0-SNAPSHOT
-							/ ${projectTimeISO}</footer>
-						<bottom>Copyright � {inceptionYear}-{currentYear} &lt;a
-							href="http://www.carrotgarden.com/"
-							target="_blank"&gt;CarrotGarden&lt;/a&gt;. All Rights Reserved.</bottom>
-					</configuration>
-				</plugin>
-				<plugin>
-					<artifactId>maven-source-plugin</artifactId>
-					<version>3.0.1</version>
-					<executions>
-						<execution>
-							<id>attach-sources</id>
-							<phase>invalid</phase>
-							<goals>
-								<goal>jar</goal>
-							</goals>
-						</execution>
-						<execution>
-							<id>attach-sources-no-fork</id>
-							<phase>package</phase>
-							<goals>
-								<goal>jar-no-fork</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-				<plugin>
-					<groupId>org.codehaus.gmaven</groupId>
-					<artifactId>groovy-maven-plugin</artifactId>
-					<version>2.0</version>
-					<dependencies>
-						<dependency>
-							<groupId>org.codehaus.groovy</groupId>
-							<artifactId>groovy-all</artifactId>
-							<version>2.4.14</version>
-						</dependency>
-					</dependencies>
-				</plugin>
 			</plugins>
 		</pluginManagement>
 		<plugins>
