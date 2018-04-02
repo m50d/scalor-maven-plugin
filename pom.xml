@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.carrotgarden.maven</groupId>
 	<artifactId>scalor-maven-plugin</artifactId>
 	<version>0-SNAPSHOT</version>
 	<packaging>pom</packaging>
+	<pluginRepositories>
+		<pluginRepository>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<id>bintray-random-maven-maven</id>
+			<name>bintray-plugins</name>
+			<url>https://dl.bintray.com/random-maven/maven</url>
+		</pluginRepository>
+	</pluginRepositories>
 	<dependencies>
 		<dependency>
 			<groupId>com.github.klieber</groupId>
@@ -26,7 +37,7 @@
 			<plugin>
 				<groupId>com.carrotgarden.maven</groupId>
 				<artifactId>flatten-maven-plugin</artifactId>
-				<version>1.3.20180210195103</version>
+				<version>1.4.20180401224951</version>
 				<executions>
 					<execution>
 						<goals>
