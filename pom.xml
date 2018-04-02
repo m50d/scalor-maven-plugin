@@ -17,30 +17,8 @@
 		<pluginManagement>
 			<plugins>
 				<plugin>
-					<groupId>com.carrotgarden.maven</groupId>
-					<artifactId>flatten-maven-plugin</artifactId>
-					<version>1.3.20180210195103</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.servicemix.tooling</groupId>
-					<artifactId>depends-maven-plugin</artifactId>
-					<version>1.4.0</version>
-				</plugin>
-				<plugin>
 					<artifactId>maven-dependency-plugin</artifactId>
 					<version>3.0.2</version>
-				</plugin>
-				<plugin>
-					<artifactId>maven-clean-plugin</artifactId>
-					<version>3.0.0</version>
-				</plugin>
-				<plugin>
-					<artifactId>maven-install-plugin</artifactId>
-					<version>2.5.2</version>
-				</plugin>
-				<plugin>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.7.0</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
@@ -51,38 +29,11 @@
 				<version>1.3.20180210195103</version>
 				<executions>
 					<execution>
-						<phase>test</phase>
 						<goals>
 							<goal>flatten</goal>
 						</goals>
-						<configuration>
-							<memberRemoveList>
-								<member>parent</member>
-								<member>properties</member>
-								<member>distributionManagement</member>
-								<member>dependencyManagement</member>
-								<member>repositories</member>
-								<member>pluginRepositories</member>
-								<member>build</member>
-								<member>profiles</member>
-								<member>reporting</member>
-							</memberRemoveList>
-						</configuration>
 					</execution>
 				</executions>
-				<configuration>
-					<memberRemoveList>
-						<member>parent</member>
-						<member>properties</member>
-						<member>distributionManagement</member>
-						<member>dependencyManagement</member>
-						<member>repositories</member>
-						<member>pluginRepositories</member>
-						<member>build</member>
-						<member>profiles</member>
-						<member>reporting</member>
-					</memberRemoveList>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
